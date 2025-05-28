@@ -59,7 +59,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
+          username: ${{ chungta0609 }}
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Extract metadata
@@ -192,23 +192,23 @@ jobs:
       #       })
 
   # Job 5: Security scan
-  # security-scan:
-  #   runs-on: ubuntu-latest
-  #   name: Security Scan
-  #   needs: build-docker
+  security-scan:
+    runs-on: ubuntu-latest
+    name: Security Scan
+    needs: build-docker
     
-  #   steps:
-  #     - name: Run Trivy vulnerability scanner
-  #       uses: aquasecurity/trivy-action@master
-  #       with:
-  #         image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-  #         format: 'sarif'
-  #         output: 'trivy-results.sarif'
+    steps:
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          format: 'sarif'
+          output: 'trivy-results.sarif'
 
-  #     - name: Upload Trivy scan results to GitHub Security tab
-  #       uses: github/codeql-action/upload-sarif@v2
-  #       with:
-  #         sarif_file: 'trivy-results.sarif'
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
 
   # Job 6: Lighthouse Performance Check (optional)
   # lighthouse:
