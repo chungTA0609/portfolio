@@ -68,7 +68,7 @@ export function AnimatedSection({
         case "rotate":
           return `${baseClasses} ${durationClass} opacity-0 rotate-12 scale-75`
         default:
-          return `${baseClasses} ${durationClass} opacity-0 translate-y-8`
+          return `${baseClasses} ${durationClass} opacity-0 translate-y-9`
       }
     } else {
       return `${baseClasses} ${durationClass} opacity-100 translate-y-0 translate-x-0 scale-100 rotate-0`
