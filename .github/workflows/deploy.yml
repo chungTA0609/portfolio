@@ -1,4 +1,4 @@
-name: Deploy to Vercel with Docker
+name: Deploy to Vercel
 
 on:
   push:
@@ -9,11 +9,9 @@ on:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # Job 1: Build and test
+  # Job 1: Install dependencies and run tests
   test:
     runs-on: ubuntu-latest
     name: Test and Build Check
@@ -42,55 +40,21 @@ jobs:
       - name: Build project
         run: npm run build
 
-  # Job 2: Build Docker image
-  build-docker:
-    runs-on: ubuntu-latest
-    name: Build Docker Image
-    needs: test
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to Container Registry
-        uses: docker/login-action@v3
+      - name: Cache build artifacts
+        uses: actions/cache@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT }}
+          path: |
+            .next
+            node_modules
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
 
-      - name: Extract metadata
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=sha,prefix={{branch}}-
-            type=raw,value=latest,enable={{is_default_branch}}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./Dockerfile
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          build-args: |
-            CUSTOM_KEY=${{ secrets.CUSTOM_KEY }}
-
-  # Job 3: Deploy to Vercel Preview (for PRs)
+  # Job 2: Deploy to Vercel Preview (for PRs)
   deploy-preview:
     runs-on: ubuntu-latest
     name: Deploy Preview
-    needs: [test, build-docker]
+    needs: test
     if: github.event_name == 'pull_request'
     
     steps:
@@ -109,12 +73,8 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts with Docker
-        run: |
-          docker build -t portfolio-preview .
-          docker create --name temp-container portfolio-preview
-          docker cp temp-container:/app/.next ./.next
-          docker rm temp-container
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         id: deploy
@@ -131,10 +91,9 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `🐳 **Docker Preview deployment ready!**
+              body: `🚀 **Preview deployment ready!**
               
               ✅ Preview URL: ${{ steps.deploy.outputs.preview_url }}
-              🐳 Built with Docker
               
               📝 Commit: ${context.sha.substring(0, 7)}
               🌿 Branch: ${context.ref.replace('refs/heads/', '')}
@@ -142,11 +101,11 @@ jobs:
               This preview will be automatically updated when you push new commits to this PR.`
             })
 
-  # Job 4: Deploy to Production (for main branch)
+  # Job 3: Deploy to Production (for main branch)
   deploy-production:
     runs-on: ubuntu-latest
     name: Deploy to Production
-    needs: [test, build-docker]
+    needs: test
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
     steps:
@@ -165,17 +124,13 @@ jobs:
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - name: Build Project Artifacts with Docker
-        run: |
-          docker build -t portfolio-production .
-          docker create --name temp-container portfolio-production
-          docker cp temp-container:/app/.next ./.next
-          docker rm temp-container
+      - name: Build Project Artifacts
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-          url=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
           echo "production_url=$url" >> $GITHUB_OUTPUT
 
       # - name: Create deployment status
@@ -188,29 +143,10 @@ jobs:
       #         deployment_id: context.payload.deployment?.id || 0,
       #         state: 'success',
       #         environment_url: '${{ steps.deploy.outputs.production_url }}',
-      #         description: 'Docker deployment to production successful'
+      #         description: 'Deployment to production successful'
       #       })
 
-  # Job 5: Security scan
-  security-scan:
-    runs-on: ubuntu-latest
-    name: Security Scan
-    needs: build-docker
-    
-    steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          format: 'sarif'
-          output: 'trivy-results.sarif'
-
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-
-  # Job 6: Lighthouse Performance Check (optional)
+  # Job 4: Lighthouse Performance Check (optional)
   # lighthouse:
   #   runs-on: ubuntu-latest
   #   name: Lighthouse Performance Check
@@ -224,7 +160,7 @@ jobs:
   #     - name: Setup Node.js
   #       uses: actions/setup-node@v4
   #       with:
-  #         node-version: '18'
+  #         node-version: '22'
 
   #     - name: Install Lighthouse CI
   #       run: npm install -g @lhci/cli@0.12.x
