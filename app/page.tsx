@@ -75,7 +75,7 @@ export default function Portfolio() {
                 <AnimatedSection delay={200} direction="right">
                   <div className="inline-flex items-center rounded-full border px-3 py-1 text-sm bg-muted/50 mb-4">
                     <span className="text-primary">⚡</span>
-                    <span className="ml-2">Ready to Innovate</span>
+                    <span className="ml-2">Open to Work</span>
                   </div>
                 </AnimatedSection>
 
