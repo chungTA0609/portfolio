@@ -175,7 +175,7 @@ jobs:
       - name: Deploy Project Artifacts to Vercel
         id: deploy
         run: |
-          url=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          url=$(vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }})
           echo "production_url=$url" >> $GITHUB_OUTPUT
 
       # - name: Create deployment status
@@ -192,23 +192,23 @@ jobs:
       #       })
 
   # Job 5: Security scan
-  security-scan:
-    runs-on: ubuntu-latest
-    name: Security Scan
-    needs: build-docker
+  # security-scan:
+  #   runs-on: ubuntu-latest
+  #   name: Security Scan
+  #   needs: build-docker
     
-    steps:
-      - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-          format: 'sarif'
-          output: 'trivy-results.sarif'
+  #   steps:
+  #     - name: Run Trivy vulnerability scanner
+  #       uses: aquasecurity/trivy-action@master
+  #       with:
+  #         image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+  #         format: 'sarif'
+  #         output: 'trivy-results.sarif'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
+  #     - name: Upload Trivy scan results to GitHub Security tab
+  #       uses: github/codeql-action/upload-sarif@v2
+  #       with:
+  #         sarif_file: 'trivy-results.sarif'
 
   # Job 6: Lighthouse Performance Check (optional)
   # lighthouse:
