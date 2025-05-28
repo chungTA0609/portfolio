@@ -12,6 +12,8 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   swcMinify: true,
+  // Enable standalone output for Docker
+  output: 'standalone',
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },

@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "portfolio",
+    "name": "portfolio-chunglnt",
     "framework": "nextjs",
     "installCommand": "npm ci",
     "buildCommand": "npm run build",
@@ -11,6 +11,21 @@
         "runtime": "vercel-node@1.6.0"
       }
     },
+    "builds": [
+      {
+        "src": "Dockerfile",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": ".next"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/$1"
+      }
+    ],
     "env": {
       "NODE_ENV": "production"
     },
