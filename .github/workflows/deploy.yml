@@ -146,7 +146,7 @@ jobs:
       #         description: 'Deployment to production successful'
       #       })
 
-  Job 4: Lighthouse Performance Check (optional)
+  # Job 4: Lighthouse Performance Check (optional)
   lighthouse:
     runs-on: ubuntu-latest
     name: Lighthouse Performance Check
