@@ -146,29 +146,29 @@ jobs:
       #         description: 'Deployment to production successful'
       #       })
 
-  # Job 4: Lighthouse Performance Check (optional)
-  # lighthouse:
-  #   runs-on: ubuntu-latest
-  #   name: Lighthouse Performance Check
-  #   needs: deploy-production
-  #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+  Job 4: Lighthouse Performance Check (optional)
+  lighthouse:
+    runs-on: ubuntu-latest
+    name: Lighthouse Performance Check
+    needs: deploy-production
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '22'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
-  #     - name: Install Lighthouse CI
-  #       run: npm install -g @lhci/cli@0.12.x
+      - name: Install Lighthouse CI
+        run: npm install -g @lhci/cli@0.12.x
 
-  #     - name: Run Lighthouse CI
-  #       run: |
-  #         lhci autorun
-  #       env:
-  #         LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
-  #         LHCI_BUILD_CONTEXT__COMMIT_TIME: ${{ github.event.head_commit.timestamp }}
+      - name: Run Lighthouse CI
+        run: |
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+          LHCI_BUILD_CONTEXT__COMMIT_TIME: ${{ github.event.head_commit.timestamp }}
