@@ -1,35 +1,24 @@
 {
-  "version": 2,
-  "name": "portfolio",
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  },
-  "build": {
+    "version": 2,
+    "name": "portfolio",
+    "framework": "nextjs",
+    "installCommand": "npm ci",
+    "buildCommand": "npm run build",
+    "devCommand": "npm run dev",
+    "outputDirectory": ".next",
+    "functions": {
+      "app/api/**/*.ts": {
+        "runtime": "nodejs22.x"
+      }
+    },
+    "regions": ["hnd1", "sfo1"],
     "env": {
       "NODE_ENV": "production"
+    },
+    "build": {
+      "env": {
+        "NODE_ENV": "production"
+      }
     }
-  },
-  "functions": {
-    "app/api/**/*.ts": {
-      "runtime": "nodejs22.x"
-    }
-  },
-  "regions": ["hnd1", "sfo1"],
-  "framework": "nextjs",
-  "installCommand": "npm ci",
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
-  "outputDirectory": ".next"
-}
+  }
+  
