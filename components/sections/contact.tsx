@@ -17,7 +17,7 @@ export function Contact() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={200} direction="fade">
-                        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        <p className="max-w-[100%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                             Feel free to reach out if you're looking for a developer or just want to connect.
                         </p>
                     </AnimatedSection>

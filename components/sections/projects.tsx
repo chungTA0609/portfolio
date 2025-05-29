@@ -103,7 +103,7 @@ export function Projects() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={200} direction="right">
-                        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        <p className="max-w-[100%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                             Highlighting my major projects and contributions across different domains.
                         </p>
                     </AnimatedSection>

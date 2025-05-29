@@ -42,7 +42,7 @@ export function Experience() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={200} direction="fade">
-                        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        <p className="max-w-[100%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                             My professional journey and work experience.
                         </p>
                     </AnimatedSection>

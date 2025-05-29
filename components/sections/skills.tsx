@@ -111,7 +111,7 @@ export function Skills() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={200} direction="scale">
-                        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        <p className="max-w-[100%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                             My technical expertise across frontend, backend, and DevOps technologies with proficiency levels.
                         </p>
                     </AnimatedSection>
