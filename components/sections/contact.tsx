@@ -39,16 +39,16 @@ export function Contact() {
                             <span>Hanoi, Vietnam</span>
                         </div>
                         <StaggeredContainer staggerDelay={100} baseDelay={600}>
-                            <Link href="https://github.com/chungTA0609" target="_blank" rel="noreferrer">
+                            <span><Link href="https://github.com/chungTA0609" target="_blank" rel="noreferrer">
                                 <Button variant="outline" size="icon" className="hover:scale-110 transition-transform">
                                     <Github className="h-5 w-5" />
                                 </Button>
                             </Link>
-                            <Link href="https://linkedin.com/in/chunglnt0609" target="_blank" rel="noreferrer">
-                                <Button variant="outline" size="icon" className="hover:scale-110 transition-transform">
-                                    <Linkedin className="h-5 w-5" />
-                                </Button>
-                            </Link>
+                                <Link href="https://linkedin.com/in/chunglnt0609" target="_blank" rel="noreferrer">
+                                    <Button variant="outline" size="icon" className="hover:scale-110 transition-transform">
+                                        <Linkedin className="h-5 w-5" />
+                                    </Button>
+                                </Link></span>
                         </StaggeredContainer>
                     </div>
                 </AnimatedSection>

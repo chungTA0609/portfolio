@@ -27,6 +27,7 @@ export function Experience() {
         },
         {
             company: "Internships",
+            period: "2021 – 2022",
             role: "Fullstack Intern (Angular, .NET) at VTI & Trí Nam",
             direction: "left" as const,
         },
@@ -45,36 +46,61 @@ export function Experience() {
                             My professional journey and work experience.
                         </p>
                     </AnimatedSection>
-                </div>
 
-                <AnimatedSection delay={400} direction="left">
-                    <div className="mx-auto max-w-3xl mt-8">
-                        <div className="relative border-l border-muted-foreground/20 pl-6 pb-6">
-                            {experiences.map((exp, index) => (
-                                <AnimatedSection key={exp.company} delay={600 + index * 200} direction={exp.direction}>
-                                    <div className="mb-10 last:mb-0">
+                    <div className="mx-auto max-w-4xl mt-12 w-full">
+                        <div className="relative">
+                            {/* Timeline line */}
+                            <div className="absolute left-4 md:left-1/2 md:-translate-x-0.5 top-0 bottom-0 w-0.5 bg-border"></div>
+
+                            <div className="space-y-12">
+                                {experiences.reverse().map((exp, index) => (
+                                    <AnimatedSection key={exp.company} delay={400 + index * 200} direction={exp.direction}>
                                         <div
-                                            className={`absolute left-0 flex h-6 w-6 items-center justify-center rounded-full bg-primary -translate-x-1/2 hover:scale-125 transition-transform`}
-                                            style={{ top: `${index * 120}px` }}
+                                            className={`relative flex items-start ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                                                } flex-col md:gap-8`}
                                         >
-                                            <div className="h-2 w-2 rounded-full bg-background"></div>
+                                            {/* Timeline dot */}
+                                            <div className="absolute left-4 md:left-1/2 md:-translate-x-1/2 flex h-4 w-4 items-center justify-center rounded-full bg-primary border-4 border-background shadow-lg hover:scale-125 transition-transform z-10">
+                                                <div className="h-2 w-2 rounded-full bg-background"></div>
+                                            </div>
+
+                                            {/* Content card */}
+                                            <div
+                                                className={`ml-12 md:ml-0 ${index % 2 === 0 ? "md:mr-8 md:text-right" : "md:ml-8 md:text-left"
+                                                    } md:w-1/2 w-full`}
+                                            >
+                                                <div className="bg-card border rounded-lg p-6 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105">
+                                                    <div className="space-y-2">
+                                                        <h3 className="text-xl font-bold text-foreground">{exp.company}</h3>
+                                                        {exp.period && <p className="text-sm text-muted-foreground font-medium">{exp.period}</p>}
+                                                        <p className="font-semibold text-primary">{exp.role}</p>
+                                                        {exp.tasks && (
+                                                            <div className="mt-3">
+                                                                <ul
+                                                                    className={`text-sm space-y-1 text-muted-foreground ${index % 2 === 0 ? "md:text-right" : "md:text-left"
+                                                                        }`}
+                                                                >
+                                                                    {exp.tasks.map((task, i) => (
+                                                                        <li key={i} className="leading-relaxed">
+                                                                            • {task}
+                                                                        </li>
+                                                                    ))}
+                                                                </ul>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {/* Spacer for the other side on desktop */}
+                                            <div className="hidden md:block md:w-1/2"></div>
                                         </div>
-                                        <h3 className="text-xl font-bold">{exp.company}</h3>
-                                        {exp.period && <p className="text-sm text-muted-foreground">{exp.period}</p>}
-                                        <p className="font-medium mt-2">{exp.role}</p>
-                                        {exp.tasks && (
-                                            <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
-                                                {exp.tasks.map((task, i) => (
-                                                    <li key={i}>{task}</li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </AnimatedSection>
-                            ))}
+                                    </AnimatedSection>
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </AnimatedSection>
+                </div>
             </div>
         </section>
     )
