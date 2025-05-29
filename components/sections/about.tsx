@@ -13,7 +13,7 @@ export function About() {
                     </AnimatedSection>
 
                     <AnimatedSection delay={200} direction="fade">
-                        <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
+                        <p className="max-w-[100%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
                             Experienced Frontend Developer with 2+ years of hands-on experience in Angular, VueJS, and React. Strong
                             grasp of fullstack development using NestJS, MySQL, and Spring Boot. Passionate about building robust
                             systems with clean architecture and effective teamwork.
