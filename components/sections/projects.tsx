@@ -58,13 +58,13 @@ export function Projects() {
         },
         {
             title: "E-Commerce Website",
-            company: "Personal Project",
+            company: "Project III - HUST",
             date: "06/2021 – 08/2021",
             techs: ["Angular", ".NET Core", "EF Core"],
             hasGithub: true,
             direction: "right" as const,
             status: "Completed",
-            category: "E-commerce",
+            category: "Academic",
         },
     ]
 
