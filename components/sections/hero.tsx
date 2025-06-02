@@ -71,18 +71,20 @@ export function Hero() {
                         </AnimatedSection>
 
                         <StaggeredContainer staggerDelay={150} baseDelay={1400}>
-                            <Link href="#projects">
-                                <Button className="hover:scale-105 transition-transform">View Projects</Button>
-                            </Link>
-                            <Link href="#contact">
-                                <Button variant="outline" className="hover:scale-105 transition-transform">
-                                    Contact Me
+                            <div className="flex" style={{ gap: "10px" }}>
+                                <Link href="#projects">
+                                    <Button className="hover:scale-105 transition-transform">View Projects</Button>
+                                </Link>
+                                <Link href="#contact">
+                                    <Button variant="outline" className="hover:scale-105 transition-transform">
+                                        Contact Me
+                                    </Button>
+                                </Link>
+                                <Button variant="outline" className="flex items-center hover:scale-105 transition-transform">
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Download Resume
                                 </Button>
-                            </Link>
-                            <Button variant="outline" className="flex items-center hover:scale-105 transition-transform">
-                                <Download className="mr-2 h-4 w-4" />
-                                Download Resume
-                            </Button>
+                            </div>
                         </StaggeredContainer>
                     </div>
 

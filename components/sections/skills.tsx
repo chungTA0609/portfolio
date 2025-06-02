@@ -23,7 +23,7 @@ export function Skills() {
                 { name: "HTML5", level: 80, category: "Markup" },
                 { name: "CSS3", level: 80, category: "Styling" },
                 { name: "WebSocket", level: 50, category: "Protocol" },
-                { name: "Nginx", level: 65, category: "Server" },
+                { name: "Nginx", level: 50, category: "Server" },
                 { name: "Frontend Security", level: 65, category: "Security" },
             ],
         },
