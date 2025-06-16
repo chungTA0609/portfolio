@@ -80,10 +80,12 @@ export function Hero() {
                                         Contact Me
                                     </Button>
                                 </Link>
-                                <Button variant="outline" className="flex items-center hover:scale-105 transition-transform">
-                                    <Download className="mr-2 h-4 w-4" />
-                                    Download Resume
-                                </Button>
+                                <a href="/files/resume.pdf" download="Le-Nguyen-Thanh-Chung.pdf">
+                                    <Button variant="outline" className="flex items-center hover:scale-105 transition-transform">
+                                        <Download className="mr-2 h-4 w-4" />
+                                        Download Resume
+                                    </Button>
+                                </a>
                             </div>
                         </StaggeredContainer>
                     </div>
