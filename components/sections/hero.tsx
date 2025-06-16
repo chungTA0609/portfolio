@@ -93,7 +93,7 @@ export function Hero() {
                     <AnimatedSection delay={1000} direction="scale">
                         <div className="flex items-center justify-center">
                             <Image
-                                src="/profile-image.png"
+                                src="/profile.JPG"
                                 alt="Lê Nguyễn Thành Chung"
                                 width={400}
                                 height={400}
